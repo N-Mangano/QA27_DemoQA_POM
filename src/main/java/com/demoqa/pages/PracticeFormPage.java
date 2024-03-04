@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.testng.Assert;
 
-public class PracticeFormPage extends BasePage {
+import java.util.concurrent.CompletionService;
+
+public class PracticeFormPage extends BasePage{
 
   public PracticeFormPage(WebDriver driver) {
     super(driver);
@@ -21,12 +23,11 @@ public class PracticeFormPage extends BasePage {
   @FindBy(id = "userNumber")
   WebElement userNumber;
 
-  public PracticeFormPage enterPersonalData(String name, String lastname, String email,
-      String phone) {
-    typeWithJS(firstName, name, 0, 300);
-    type(lastName, lastname);
-    type(userEmail, email);
-    type(userNumber, phone);
+  public PracticeFormPage enterPersonalData(String name, String lastname, String email, String phone) {
+    typeWithJS(firstName,name,0,300);
+    type(lastName,lastname);
+    type(userEmail,email);
+    type(userNumber,phone);
     return this;
   }
 
@@ -38,11 +39,11 @@ public class PracticeFormPage extends BasePage {
   WebElement other;
 
   public PracticeFormPage selectGender(String gender) {
-    if (gender.equals("Male")) {
+    if (gender.equals("Male")){
       click(male);
-    } else if (gender.equals("Female")) {
+    }else if (gender.equals("Female")) {
       click(female);
-    } else {
+    }else {
       click(other);
     }
     return this;
@@ -58,9 +59,9 @@ public class PracticeFormPage extends BasePage {
     System.out.println("My OS is " + os);
 
     if (os.startsWith("Mac")) {
-      dateOfBirthInput.sendKeys(Keys.COMMAND, "a");
+      dateOfBirthInput.sendKeys(Keys.COMMAND,"a");
     } else {
-      dateOfBirthInput.sendKeys(Keys.CONTROL, "a");
+      dateOfBirthInput.sendKeys(Keys.CONTROL,"a");
     }
     dateOfBirthInput.sendKeys(date);
     dateOfBirthInput.sendKeys(Keys.ENTER);
@@ -73,7 +74,7 @@ public class PracticeFormPage extends BasePage {
   public PracticeFormPage addSubject(String[] subjects) {
     for (int i = 0; i < subjects.length; i++) {
       if (subjects[i] != null) {
-        type(subjectsInput, subjects[i]);
+        type(subjectsInput,subjects[i]);
         subjectsInput.sendKeys(Keys.ENTER);
       }
     }
@@ -82,33 +83,28 @@ public class PracticeFormPage extends BasePage {
 
   @FindBy(css = "[for='hobbies-checkbox-1']")
   WebElement sports;
-
-
   @FindBy(css = "[for='hobbies-checkbox-2']")
   WebElement reading;
-
-
   @FindBy(css = "[for='hobbies-checkbox-3']")
   WebElement music;
 
-  private PracticeFormPage selectHobby(String[] hobby) {
+  public PracticeFormPage selectHobby(String[] hobby) {
     for (int i = 0; i < hobby.length; i++) {
       if (hobby[i].equals("Sports")) {
         click(sports);
-      }
-      if (hobby[i].equals("reading")) {
+      } if (hobby[i].equals("Reading")) {
         click(reading);
-      }
-      if (hobby[i].equals("Music")) {
+      }if (hobby[i].equals("Music")) {
         click(music);
       }
     }
     return this;
   }
 
-  @FindBy(css = "uploadPicture")
+  @FindBy(id = "uploadPicture")
   WebElement uploadPicture;
-  private PracticeFormPage uploadFile(String path) {
+
+  public PracticeFormPage uploadFile(String path) {
     uploadPicture.sendKeys(path);
     return this;
   }
@@ -119,9 +115,8 @@ public class PracticeFormPage extends BasePage {
   @FindBy(id = "state")
   WebElement stateContainer;
 
-
-  private Object selectState(String state) {
-    click(stateContainer);
+  public PracticeFormPage selectState(String state) {
+    clickWithJS(stateContainer,0,300);
     stateInput.sendKeys(state);
     stateInput.sendKeys(Keys.ENTER);
     return this;
@@ -151,7 +146,7 @@ public class PracticeFormPage extends BasePage {
   @FindBy(id = "example-modal-sizes-title-lg")
   WebElement modalTitle;
 
-  private PracticeFormPage verifyStudentFormTitle(String title) {
+  public PracticeFormPage verifyStudentFormTitle(String title) {
     Assert.assertTrue(modalTitle.getText().contains(title));
     return this;
   }
